@@ -29,7 +29,7 @@ export async function POST(req: NextRequest) {
         );
         const totalPrice = days * car.pricePerDay;
 
-        await CarBooking.create({
+        const booking=await CarBooking.create({
             userId: session.user._id,
             carId,
             startDate: new Date(startDate),
@@ -37,7 +37,7 @@ export async function POST(req: NextRequest) {
             totalPrice
         });
 
-        return NextResponse.json({ message: "Car booking created successfully" }, { status: 201 });
+        return NextResponse.json({ message: "Car booking created successfully",booking }, { status: 201 });
     } catch (error) {
         console.log("Error Creating Car Booking:", error);
         return NextResponse.json({ error: "Internal error" }, { status: 500 });

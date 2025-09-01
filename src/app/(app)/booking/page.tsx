@@ -4,6 +4,8 @@ import React, { useState } from "react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import ResortTab from "@/components/ResortTab";
 import BookingSummary from "@/components/BookingSummary";
+import FlightTab from "@/components/FlightTab";
+import CarTab from "@/components/CarTab";
 
 function Page() {
     const [booking, setBooking] = useState({
@@ -42,21 +44,21 @@ function Page() {
 
                         <div className="mt-6">
                         <TabsContent value="flight">
-                            <div className="text-gray-500 text-center py-10">
-                            ✈️ Flight booking coming soon...
-                            </div>
+                            <FlightTab 
+                                onSelectFlight={(flight) => setBooking({ ...booking, flight })}
+                            />
                         </TabsContent>
 
                         <TabsContent value="resort">
                             <ResortTab
-                            onSelectResort={(resort) => setBooking({ ...booking, resort })}
+                                onSelectResort={(resort) => setBooking({ ...booking, resort })}
                             />
                         </TabsContent>
 
                         <TabsContent value="car">
-                            <div className="text-gray-500 text-center py-10">
-                            🚗 Car rentals coming soon...
-                            </div>
+                            <CarTab 
+                                onSelectCar={(car) => setBooking({ ...booking, car })}
+                            />
                         </TabsContent>
                         </div>
                     </div>

@@ -25,15 +25,16 @@ export async function POST(req: NextRequest) {
         }
 
         const totalPrice = seats * flight.price;
+        console.log("Toatal:  ",totalPrice);
 
-        await FlightBooking.create({
+        const booking=await FlightBooking.create({
             userId: session.user._id,
             flightId,
             seats,
             totalPrice
         });
 
-        return NextResponse.json({ message: "Flight booking created successfully" }, { status: 201 });
+        return NextResponse.json({ message: "Flight booking created successfully",booking }, { status: 201 });
     } catch (error) {
         console.log("Error Creating Flight Booking:", error);
         return NextResponse.json({ error: "Internal error" }, { status: 500 });
