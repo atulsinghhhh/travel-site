@@ -52,7 +52,7 @@ export async function POST(req: NextRequest) {
 
         // upload image to cloudinary
 
-        const uploadedImage=await new Promise<CloudinaryUploadResult>((resolve,reject)=>{
+        const uploadedImage=await new Promise((resolve,reject)=>{
             cloudinary.uploader.upload_stream({folder: "destinations"},
                 (error,result)=>{
                     if(error) reject(error)
