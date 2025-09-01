@@ -18,16 +18,20 @@ export async function POST(req:NextRequest){
         if(!resortId || !checkIn || !checkout){
             return NextResponse.json({error: "all fields are required"},{status:400});
         }
+        console.log({ resortId, checkIn, checkout });
+
 
         const resort=await Resort.findById(resortId);
         if(!resort){
             return NextResponse.json({ error: "Resort not found" }, { status: 404 });
         }
 
-        const nights=Math.ceil(new Date(checkout).getTime()-new Date(checkIn).getTime())/(1000*60*60*24);
+        const nights = Math.ceil(
+        (new Date(checkout).getTime() - new Date(checkIn).getTime()) / (1000 * 60 * 60 * 24)
+        );
         const totalPrice=nights*resort.pricePerNight
 
-        await ResortBooking.create({
+        const booking=await ResortBooking.create({
             userId: session.user._id,
             resortId,
             checkIn: new Date(checkIn),
@@ -35,7 +39,9 @@ export async function POST(req:NextRequest){
             totalPrice
         })
 
-        return NextResponse.json({message: "Booking created successfully"},{status:201})
+        
+
+        return NextResponse.json({message: "Booking created successfully",booking},{status:201})
     } catch (error) {
         console.log("Error Ocurring Create: ",error);
         return NextResponse.json({error: "interal error"},{status: 500});

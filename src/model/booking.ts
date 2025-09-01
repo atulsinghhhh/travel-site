@@ -40,7 +40,7 @@ export interface IBooking {
     userId: mongoose.Types.ObjectId;
     resortId: mongoose.Types.ObjectId;
     checkIn: Date;
-    checkOut: Date;
+    checkout: Date;
     totalPrice: number;
 }
 
@@ -48,7 +48,7 @@ const bookingSchema = new Schema<IBooking>({
     userId: { type: Schema.Types.ObjectId, ref: "Users", required: true },
     resortId: { type: Schema.Types.ObjectId, ref: "Resort", required: true },
     checkIn: { type: Date, required: true },
-    checkOut: { type: Date, required: true },
+    checkout: { type: Date, required: true },
     totalPrice: { type: Number, required: true }
 }, { timestamps: true });
 

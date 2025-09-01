@@ -13,6 +13,7 @@ export async function POST(req: NextRequest) {
 
         await connectDB();
         const { bookingType, bookingId, amount, method } = await req.json();
+        console.log("Payment body:", { bookingType, bookingId, amount, method });
 
         if (!bookingType || !bookingId || !amount || !method) {
             return NextResponse.json({ error: "All fields are required" }, { status: 400 });
