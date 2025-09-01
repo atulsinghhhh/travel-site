@@ -18,6 +18,7 @@ export interface IUser {
         total: number;
         spent: number;
     };
+    following: mongoose.Schema.Types.ObjectId[]
 }
 
 const userSchema = new Schema<IUser>(
@@ -62,6 +63,8 @@ const userSchema = new Schema<IUser>(
             total: { type: Number, default: 0 },
             spent: { type: Number, default: 0 },
         },
+        following: [{ type: Schema.Types.ObjectId, ref: "Users" }]
+
     },
     { timestamps: true }
 );

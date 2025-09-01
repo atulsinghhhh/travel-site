@@ -4,8 +4,8 @@ export interface ICommunity{
     userId: string
     content:string
     image: string
-    hashtags: [string]
-    event: mongoose.Schema.Types.ObjectId
+    hashtags: [string],
+    createdBy: mongoose.Schema.Types.ObjectId
 }
 
 const communitySchema=new Schema({
@@ -17,12 +17,13 @@ const communitySchema=new Schema({
         type: String,
         required:true
     },
+    image: {type: String},
     hashtags: [
         {type:String}
     ],
-    event:{
+    createdBy: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Event"
+        ref: "Users"
     }
 },{timestamps:true})
 
