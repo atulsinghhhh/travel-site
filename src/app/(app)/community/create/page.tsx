@@ -11,6 +11,7 @@ export default function CreatePostForm() {
         content: "",
         image: null as File | null,
         hashtags: "",
+        name: ""
     });
     const [loading, setLoading] = useState(false);
 
@@ -22,6 +23,7 @@ export default function CreatePostForm() {
         const formData = new FormData();
         formData.append("content", postForm.content);
         formData.append("hashtags", postForm.hashtags);
+        formData.append("name",postForm.name)
         if (postForm.image) {
             formData.append("image", postForm.image);
         }
@@ -40,7 +42,7 @@ export default function CreatePostForm() {
         } else {
             alert("✅ Post Created Successfully");
             // reset form
-            setPostForm({ content: "", image: null, hashtags: "" });
+            setPostForm({ content: "", image: null, hashtags: "",name: "" });
         }
         } catch (err) {
         console.error("Error creating post:", err);
@@ -51,19 +53,25 @@ export default function CreatePostForm() {
     };
 
     return (
-        <div className="w-full max-w-2xl mx-auto mt-20">
+        <div className="w-full max-w-2xl mx-auto mt-16">
         <Card className="w-full border border-gray-200 shadow-sm">
             <h1 className="text-2xl text-center py-4">Create New Post</h1>
             <CardContent className="p-4">
             <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-4">
+                <Input
+                    placeholder="give perfect topic your post"
+                    value={postForm.name}
+                    onChange={(e) => setPostForm({...postForm,name: e.target.value})}
+                    className="w-full"
+                />
                 {/* Content */}
                 <Textarea
-                placeholder="Share your travel experience..."
-                value={postForm.content}
-                onChange={(e) =>
-                    setPostForm({ ...postForm, content: e.target.value })
-                }
-                className="resize-none col-span-1"
+                    placeholder="Share your travel experience..."
+                    value={postForm.content}
+                    onChange={(e) =>
+                        setPostForm({ ...postForm, content: e.target.value })
+                    }
+                    className="resize-none col-span-1"
                 />
 
                 {/* Hashtags + Image */}

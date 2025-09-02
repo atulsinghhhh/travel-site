@@ -9,7 +9,7 @@ import { useRouter } from 'next/navigation';
 
 type Hashtag = {
     _id: string;
-    name: string;
+    count: string;
 };
 
 function Sidebar() {
@@ -21,6 +21,8 @@ function Sidebar() {
             try {
                 const response=await fetch("/api/community/trending",{method: "GET"});
                 const data=await response.json();
+
+                console.log("Trending: ",data.trendingHashtags)
 
                 if(response.ok){
                     setHashtags(data.trendingHashtags || []);
@@ -83,7 +85,7 @@ function Sidebar() {
                 key={tag._id}
                 className="px-3 py-1 text-sm bg-gray-100 text-gray-700 rounded-full cursor-pointer hover:bg-gray-200 transition"
                 >
-                #{tag.name}
+                {tag._id}
                 </span>
             ))}
             </div>

@@ -17,6 +17,7 @@ export async function POST(req: NextRequest){
         const formData=await req.formData();
         const content=formData.get("content")?.toString();
         const hashtags=formData.get("hashtags")?.toString();
+        const name=formData.get("name")?.toString();
         const avatar=formData.get("image") as File | null
 
         // console.log("Content:", content);
@@ -46,6 +47,7 @@ export async function POST(req: NextRequest){
         const newPost=await Community.create({
             userId: session.user._id,
             content,
+            name,
             hashtags: hashtags ? hashtags.split(",").map((tag) => tag.trim()) : [],
             image: avatarUrl ? avatarUrl.secure_url : null,
             createdBy: session.user._id
