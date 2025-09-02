@@ -37,8 +37,9 @@ function FlightTab({ onSelectFlight }: FlightsTabProps) {
         const fetchFlights = async () => {
         setLoading(true);
         try {
-            const res = await fetch("/api/booking/flight/admin");
+            const res = await fetch("/api/booking/flight");
             const data = await res.json();
+            console.log("Data: ",data.flights);
             const flightsData = (data.flights || []) as Flight[];
             setFlights(flightsData);
 

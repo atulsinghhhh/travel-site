@@ -57,13 +57,4 @@ export async function POST(req: NextRequest) {
     }
 }
 
-export async function GET() {
-    try {
-        await connectDB();
-        const cars = await Car.find().select("brand model pricePerDay image");
-        return NextResponse.json({ cars }, { status: 200 });
-    } catch (error) {
-        console.log("Error Fetching Cars:", error);
-        return NextResponse.json({ error: "internal error" }, { status: 500 });
-    }
-}
+

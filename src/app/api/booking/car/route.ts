@@ -44,21 +44,13 @@ export async function POST(req: NextRequest) {
     }
 }
 
-export async function GET(req: NextRequest) {
+export async function GET() {
     try {
-        const session = await getServerSession(authOptions);
-        if (!session || !session.user) {
-            return NextResponse.json({ error: "Not authorized" }, { status: 401 });
-        }
-
         await connectDB();
-
-        const bookings = await CarBooking.find({ userId: session.user._id })
-            .populate("carId", "brand model pricePerDay image");
-
-        return NextResponse.json({ bookings }, { status: 200 });
+        const cars = await Car.find().select("brand model pricePerDay image");
+        return NextResponse.json({ cars }, { status: 200 });
     } catch (error) {
-        console.log("Error Fetching Car Bookings:", error);
-        return NextResponse.json({ error: "Internal error" }, { status: 500 });
+        console.log("Error Fetching Cars:", error);
+        return NextResponse.json({ error: "internal error" }, { status: 500 });
     }
 }

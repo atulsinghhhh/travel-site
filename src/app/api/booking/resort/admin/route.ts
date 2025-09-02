@@ -52,15 +52,4 @@ export async function POST(req:NextRequest){
     }
 }
 
-export async function GET(){
-    try {
-        await connectDB();
 
-        const resorts = await Resort.find().select("name location pricePerNight image");
-        return NextResponse.json({resorts},{status:200})
-    } catch (error) {
-        console.log("Error Ocurring fetch: ",error);
-        return NextResponse.json({error: "interal error"},{status: 500});
-        
-    }
-}

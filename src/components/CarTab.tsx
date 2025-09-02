@@ -36,7 +36,7 @@ function CarTab({ onSelectCar }: CarTabProps) {
         const fetchCars = async () => {
         setLoading(true);
         try {
-            const res = await fetch("/api/booking/car/admin");
+            const res = await fetch("/api/booking/car");
             const data = await res.json();
             const carsData = data.cars || [];
             setCars(carsData);

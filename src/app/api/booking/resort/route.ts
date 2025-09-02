@@ -48,21 +48,15 @@ export async function POST(req:NextRequest){
     }
 }
 
-export async function GET(req: NextRequest) {
+export async function GET(){
     try {
-        const session = await getServerSession(authOptions);
-        if (!session || !session.user) {
-            return NextResponse.json({ error: "Not authorized" }, { status: 401 });
-        }
-
         await connectDB();
 
-        const bookings = await ResortBooking.find({ userId: session.user._id })
-            .populate("resortId", "name location image pricePerNight");
-
-        return NextResponse.json({ bookings }, { status: 200 });
+        const resorts = await Resort.find().select("name location pricePerNight image");
+        return NextResponse.json({resorts},{status:200})
     } catch (error) {
-        console.log("Error Fetching Bookings:", error);
-        return NextResponse.json({ error: "Internal error" }, { status: 500 });
+        console.log("Error Ocurring fetch: ",error);
+        return NextResponse.json({error: "interal error"},{status: 500});
+        
     }
 }

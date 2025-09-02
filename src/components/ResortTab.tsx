@@ -37,7 +37,7 @@ function ResortTab({ onSelectResort }: ResortsTabProps) {
         const fetchResorts = async () => {
         setLoading(true);
         try {
-            const res = await fetch("/api/booking/resort/admin");
+            const res = await fetch("/api/booking/resort");
             const data = await res.json();
             const resortsData = (data.resorts || []) as Resort[];
             setResorts(resortsData);

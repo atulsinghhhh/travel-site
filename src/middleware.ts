@@ -22,7 +22,6 @@ export default withAuth(
 
             // Admin-only routes
             if (
-                pathname.startsWith("/admin") ||
                 pathname.startsWith("/api/community/event") ||
                 pathname.startsWith("/api/booking/resort/admin") ||
                 pathname.startsWith("/api/booking/flight/admin") ||

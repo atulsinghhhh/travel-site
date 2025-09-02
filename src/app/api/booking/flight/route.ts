@@ -41,21 +41,13 @@ export async function POST(req: NextRequest) {
     }
 }
 
-export async function GET(req: NextRequest) {
+export async function GET() {
     try {
-        const session = await getServerSession(authOptions);
-        if (!session || !session.user) {
-            return NextResponse.json({ error: "Not authorized" }, { status: 401 });
-        }
-
         await connectDB();
-
-        const bookings = await FlightBooking.find({ userId: session.user._id })
-            .populate("flightId", "airline from to departure arrival price image");
-
-        return NextResponse.json({ bookings }, { status: 200 });
+        const flights = await Flight.find().select("airline from to departure arrival price image");
+        return NextResponse.json({ flights }, { status: 200 });
     } catch (error) {
-        console.log("Error Fetching Flight Bookings:", error);
-        return NextResponse.json({ error: "Internal error" }, { status: 500 });
+        console.log("Error Fetching Flights:", error);
+        return NextResponse.json({ error: "internal error" }, { status: 500 });
     }
 }

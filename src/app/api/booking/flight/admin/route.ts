@@ -63,13 +63,4 @@ export async function POST(req: NextRequest) {
     }
 }
 
-export async function GET() {
-    try {
-        await connectDB();
-        const flights = await Flight.find().select("airline from to departure arrival price image");
-        return NextResponse.json({ flights }, { status: 200 });
-    } catch (error) {
-        console.log("Error Fetching Flights:", error);
-        return NextResponse.json({ error: "internal error" }, { status: 500 });
-    }
-}
+
