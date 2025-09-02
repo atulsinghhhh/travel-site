@@ -1,11 +1,11 @@
 "use client";
 
-import TripsList from '@/components/TripsList';
+import TripsList from '@/components/trip/TripsList';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
-import Sliderbar from '@/components/Sliderbar';
+import Sliderbar from '@/components/trip/Sliderbar';
 
 type Trip = {
     _id: string;

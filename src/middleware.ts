@@ -34,7 +34,7 @@ export default withAuth(
             if (
                 pathname.startsWith("/api/users/") ||
                 pathname.startsWith("/api/trips/") ||
-                pathname.startsWith("/api/trips") ||
+                pathname.startsWith("/api/community/post") ||
                 pathname.startsWith("/api/community/") ||
                 pathname.startsWith("/api/booking/")
             ) {

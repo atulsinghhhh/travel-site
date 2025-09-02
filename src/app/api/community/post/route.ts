@@ -14,10 +14,14 @@ export async function POST(req: NextRequest){
         }
 
         await connectDB();
-        const formData=new FormData();
+        const formData=await req.formData();
         const content=formData.get("content")?.toString();
         const hashtags=formData.get("hashtags")?.toString();
         const avatar=formData.get("image") as File | null
+
+        // console.log("Content:", content);
+        // console.log("Hashtags:", hashtags);
+        // console.log("Image:", avatar);
 
         if(!content){
             return NextResponse.json({error: "content field required"},{status:400});
@@ -40,13 +44,16 @@ export async function POST(req: NextRequest){
         }
 
         const newPost=await Community.create({
+            userId: session.user._id,
             content,
-            hashtags,
-            image:  avatarUrl.secure_url,
+            hashtags: hashtags ? hashtags.split(",").map((tag) => tag.trim()) : [],
+            image: avatarUrl ? avatarUrl.secure_url : null,
             createdBy: session.user._id
         })
 
-        return NextResponse.json({message: "Succesfully created"},{status:200});
+        // console.log("NewPost: ",newPost);
+
+        return NextResponse.json({message: "Succesfully created",newPost},{status:200});
     } catch (error) {
         console.log("Error: ",error);
         return NextResponse.json({error: "failed to created post"},{status:500});

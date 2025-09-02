@@ -2,10 +2,10 @@
 
 import React, { useState } from "react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import ResortTab from "@/components/ResortTab";
-import BookingSummary from "@/components/BookingSummary";
-import FlightTab from "@/components/FlightTab";
-import CarTab from "@/components/CarTab";
+import ResortTab from "@/components/booking/ResortTab";
+import BookingSummary from "@/components/booking/BookingSummary";
+import FlightTab from "@/components/booking/FlightTab";
+import CarTab from "@/components/booking/CarTab";
 
 function Page() {
     const [booking, setBooking] = useState({
