@@ -34,7 +34,10 @@ export default function RootLayout({
             
           </div> */}
           {/* <Navbar/> */}
-          {children}
+          {/* <div className="min-h-screen bg-gray-800 text-white"> */}
+            {children}
+          {/* </div> */}
+          
         </AuthProvider>
       </body>
     </html>

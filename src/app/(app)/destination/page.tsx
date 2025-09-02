@@ -1,5 +1,6 @@
 "use client";
 
+import { BackgroundGradient } from '@/components/ui/background-gradient';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -16,7 +17,7 @@ type Destination = {
     image: string;
 };
 
-const categories = ["Beaches", "Mountains", "City", "Adventure", "Relaxation"];
+const categories = ["Beaches", "Mountains", "City", "Adventure", "Relaxation","Momentum"];
 
 function Page() {
     const { data: session } = useSession();
@@ -84,19 +85,19 @@ function Page() {
     };
 
     return (
-        <div className="p-6 max-w-6xl mx-auto">
-            <h1 className="text-3xl font-bold mb-6">Explore Tropical Destinations</h1>
+        <div className="p-6 h-screen mx-auto bg-gray-800">
+            <h1 className="text-3xl font-bold mb-6 text-white">Explore Tropical Destinations</h1>
 
             {/* Search */}
             <Input
                 placeholder="Search for destination or activities"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="mb-4"
+                className="mb-4 bg-white"
             />
 
             {/* filters */}
-            <div className="flex gap-2 mb-6 flex-wrap">
+            <div className="flex gap-2 mb-6 flex-wrap cursor-pointer">
                 {categories.map((cat) => (
                 <Button
                     key={cat}
@@ -109,18 +110,19 @@ function Page() {
             </div>
 
             {/* Destination Grid */}
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 cursor-pointer">
                 {filteredDestination.map((dest) => {
                 const isWishlisted = wishlist.includes(dest._id); 
 
                 return (
-                    <Card key={dest._id} className="overflow-hidden shadow-lg">
-                        <img
+                    <BackgroundGradient className="rounded-xl">
+                        <Card key={dest._id} className="overflow-hidden shadow-lg rounded-xl">
+                            <img
                             src={dest.image}
                             alt={dest.name}
                             className="h-40 w-full object-cover"
-                        />
-                        <CardContent>
+                            />
+                            <CardContent>
                             <h3 className="font-semibold">{dest.name}</h3>
                             <p className="text-sm text-gray-500">{dest.country}</p>
 
@@ -131,15 +133,18 @@ function Page() {
                                 disabled={loading === dest._id}
                                 onClick={() => toggleWishlist(dest._id)}
                             >
-                            <Heart
+                                <Heart
                                 className={`h-4 w-4 mr-1 ${
-                                isWishlisted ? "fill-red-500" : ""
+                                    isWishlisted ? "fill-red-500" : ""
                                 }`}
-                            />
-                            {isWishlisted ? "Remove" : "Wishlist"}
+                                />
+                                {isWishlisted ? "Remove" : "Wishlist"}
                             </Button>
-                        </CardContent>
-                    </Card>
+
+                            </CardContent>
+                        </Card>
+                    </BackgroundGradient>
+
                 );
                 })}
             </div>
