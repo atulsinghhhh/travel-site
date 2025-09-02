@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { Search } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { Navbar } from "@/components/Navbar";
 
 type Destination = {
   _id: string;
@@ -36,7 +37,9 @@ export default function HomePage() {
   };
 
   return (
-<></>
+<>
+    <Navbar/>
+</>
   
   );
 }
