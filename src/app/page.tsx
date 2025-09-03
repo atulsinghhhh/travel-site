@@ -8,10 +8,10 @@ export default function HomePage() {
   
   
   return(
-       <BackgroundBeamsWithCollision>
-        hello world
-         {}
-    </BackgroundBeamsWithCollision>
+        <BackgroundBeamsWithCollision>
+          hello world
+          {}
+      </BackgroundBeamsWithCollision>
   )
 }
 
