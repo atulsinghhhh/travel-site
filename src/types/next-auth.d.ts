@@ -6,6 +6,7 @@ declare module "next-auth" {
         _id?: string
         username?: string
         fullname?: string
+        avatar?: string
         bio?: string
         travelBudget:{
             total: number,
@@ -14,12 +15,14 @@ declare module "next-auth" {
         role?:string,
         wishlist: string[];
         savedTrips: string[];
+        joinedAt? : Date;
     }
     interface Session {
         user: {
             _id?: string
             username?: string
             fullname?: string
+            avatar?: string
             bio?: string
             travelBudget:{
                 total: number,
@@ -28,6 +31,7 @@ declare module "next-auth" {
             role?:string,
             wishlist: string[];
             savedTrips: string[];
+            joinedAt? : Date;
         } & DefaultSession['user']
     }
 }
@@ -37,6 +41,7 @@ declare module 'next-auth/jwt' {
         _id?: string
         username?: string
         fullname?: string
+        avatar?: string
         bio?: string
         travelBudget:{
             total: number,
@@ -45,5 +50,6 @@ declare module 'next-auth/jwt' {
         role?:string,
         wishlist: string[];
         savedTrips: string[];
+        joinedAt? : Date;
     }
 }

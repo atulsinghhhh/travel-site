@@ -2,13 +2,13 @@
 
 import { useSession } from 'next-auth/react';
 import React from 'react'
-import {Home,Search,Briefcase,User, MessageSquarePlus} from "lucide-react"
+import {Home,Search,Briefcase,User, MessageSquarePlus, Ticket, MessageCircle} from "lucide-react"
 import Link from "next/link"
 
 function Sliderbar() {
     const {data: session}=useSession();
     return (
-        <div className='h-screen w-64 bg-white border-r flex flex-col justify-between'>
+        <div className='h-screen w-64 border-r flex flex-col justify-between bg-gray-800 text-white'>
             <div>
                 {/* user section */}
                 <div className='flex items-center gap-3 p-4'>
@@ -27,28 +27,40 @@ function Sliderbar() {
                     </div>
                 </div>
                 <nav className='mt-4 flex flex-col gap-1'>
-                    <Link href={"/"} className='flex items-center gap-3 px-4 py-2 hover:bg-gray-100 rounded-md'>
+                    <Link href={"/"} className='flex items-center gap-3 px-4 py-2 hover:bg-gray-800 rounded-md'>
                         <Home size={18}/>
                         <span>Home</span>
                     </Link>
-                    <Link href="/explore" className="flex items-center gap-3 px-4 py-2 hover:bg-gray-100 rounded-md">
+                    <Link href="/explore" className="flex items-center gap-3 px-4 py-2 hover:bg-gray-800 rounded-md">
                         <Search size={18} />
                         <span>Explore</span>
                     </Link>
 
-                    <Link href="/trips" className="flex items-center gap-3 px-4 py-2 hover:bg-gray-100 rounded-md">
+                    <Link href="/trips" className="flex items-center gap-3 px-4 py-2 hover:bg-gray-800 rounded-md">
                         <Briefcase size={18} />
                         <span>Trips</span>
                     </Link>
 
-                    <Link href="/profile" className="flex items-center gap-3 px-4 py-2 hover:bg-gray-100 rounded-md">
+                    <Link href="/booking" className="flex items-center gap-3 px-4 py-2 hover:bg-gray-800 rounded-md">
+                        <Ticket size={18} />
+                        <span>Booking</span>
+                    </Link>
+
+                    <Link href="/community" className="flex items-center gap-3 px-4 py-2 hover:bg-gray-800 rounded-md">
+                        <MessageCircle size={18} />
+                        <span>Community</span>
+                    </Link>
+
+
+
+                    <Link href="/profile" className="flex items-center gap-3 px-4 py-2 hover:bg-gray-800 rounded-md">
                         <User size={18} />
                         <span>Profile</span>
                     </Link>
                 </nav>
             </div>
             <div className='mb-4'>
-                <Link href={"/feedback"} className='flex items-center gap-3 px-4 py-2 hover:bg-gray-100 rounded-md'>
+                <Link href={"/feedback"} className='flex items-center gap-3 px-4 py-2 hover:bg-gray-800 rounded-md'>
                 <MessageSquarePlus size={18} />
                 <span>Feedback</span>
                 </Link>

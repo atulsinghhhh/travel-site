@@ -56,7 +56,7 @@ function Page() {
         <div className='flex h-screen'>
             <Sliderbar/>
 
-            <div className="flex-1 p-6 overflow-y-auto">
+            <div className="flex-1 p-6 overflow-y-auto bg-gray-800 text-white">
                 <div className="flex items-center justify-between mb-6">
                     <h1 className="text-2xl font-bold">Trips</h1>
                     <Button
@@ -70,7 +70,7 @@ function Page() {
                 {error && <p className="text-red-500 mb-4">{error}</p>}
 
                 <Tabs defaultValue="upcoming">
-                    <TabsList className="w-full flex justify-evenly border-b mb-6">
+                    <TabsList className="w-full flex justify-evenly border-b mb-6 ">
                         <TabsTrigger value="upcoming" className="flex-1 text-center">
                             Upcoming
                         </TabsTrigger>

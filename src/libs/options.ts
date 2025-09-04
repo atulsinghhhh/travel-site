@@ -44,11 +44,13 @@ export const authOptions: NextAuthOptions = {
                         email: user.email,
                         username: user.username,
                         fullname: user.fullname,
+                        avatar: user.avatar,
                         bio: user.bio,
                         travelBudget: user.travelBudget,
                         role: user.role,
                         wishlist: user.wishlist || [],
                         savedTrips: user.savedTrips || [],
+                        joinedAt: user.joinedAt
                     };
                 } catch (error) {
                     console.error("Error during authorization:", error);
@@ -66,11 +68,13 @@ export const authOptions: NextAuthOptions = {
             token._id = user._id?.toString();
             token.username = user.username;
             token.fullname = user.fullname;
+            token.avatar = user.avatar;
             token.bio = user.bio || "";
             token.travelBudget = user.travelBudget || { total: 0, spent: 0 };
             token.role = user.role || "user"
             token.wishlist = user.wishlist;
             token.savedTrips = user.savedTrips
+            token.joinedAt=user.joinedAt
         }
             // console.log("token: ",token);
             return token;
@@ -80,6 +84,7 @@ export const authOptions: NextAuthOptions = {
             session.user._id = token._id;
             session.user.username = token.username;
             session.user.fullname = token.fullname;
+            session.user.avatar = token.avatar;
 
             // overwrite default name with your fullname
             session.user.name = token.fullname;
@@ -89,6 +94,7 @@ export const authOptions: NextAuthOptions = {
             session.user.role = token.role;
             session.user.wishlist = token.wishlist;
             session.user.savedTrips = token.savedTrips
+            session.user.joinedAt=token.joinedAt
         }
             // console.log("session: ",session.user)
             return session;

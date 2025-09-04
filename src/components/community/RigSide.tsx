@@ -5,9 +5,9 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 
 type Event = {
-  _id: string;
-  title: string;
-  date: string;
+    _id: string;
+    title: string;
+    date: string;
 };
 
 type User = {
@@ -28,6 +28,8 @@ function RigSide() {
 
             const eventdata = await eventRes.json();
             const userData = await userRes.json();
+
+            console.log("userData:", userData.suggestedUsers );
 
             setEvents(eventdata.events || []);
             setUsers(userData.suggestedUsers || []);
@@ -53,7 +55,7 @@ function RigSide() {
                         key={user._id}
                         className="flex items-center justify-between"
                         >
-                        <div className="flex items-center gap-3 justify-evenly  ">
+                        <div className="flex items-center gap-3 justify-evenly">
                             <Avatar>
                                 <AvatarImage src={user.image} alt={user.username} />
                                 <AvatarFallback>{user.username[0]}</AvatarFallback>

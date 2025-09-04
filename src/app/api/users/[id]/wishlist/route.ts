@@ -51,3 +51,22 @@ export async function POST(
         );
     }
 }
+
+export async function GET(
+    req: NextRequest,
+    { params }: { params: { id: string } }){
+        try {
+            await connectDB();
+
+            const {id}=params;
+            const user=await Users.findById(id).populate("wishlist").select("wishlist");
+
+            if(!user){
+                return NextResponse.json({error: "User not found"},{status:404})
+            }
+            return NextResponse.json({message: "Wishlist fetched successfully",wishlist: user.wishlist},{status:200})
+        } catch (error) {
+            console.log("Error: ",error);
+            return NextResponse.json({error: "Server issue"},{status:500})
+        }
+    }

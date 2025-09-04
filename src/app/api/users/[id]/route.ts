@@ -39,118 +39,68 @@ export async function GET(req: NextRequest,{params}: {params: {id:string}}){
 }
 
 
-// export async function PUT(req: NextRequest, { params }: { params: { id: string } }) {
-//     try {
-//         await connectDB();
-//         const { id } = params;
-
-//         const formData = await req.formData();
-//         const bio = formData.get("bio") as string | null;
-//         const travelBudget = formData.get("travelBudget")
-//         ? JSON.parse(formData.get("travelBudget") as string)
-//         : null;
-
-//         let avatarUrl: string | undefined;
-
-//         const avatarFile = formData.get("avatar") as File | null;
-//         if (avatarFile) {
-//             const arrayBuffer = await avatarFile.arrayBuffer();
-//             const buffer = Buffer.from(arrayBuffer);
-
-//             const uploadResult = await new Promise((resolve, reject) => {
-//                 cloudinary.uploader
-//                 .upload_stream({ folder: "avatars" }, (error, result) => {
-//                     if (error) reject(error);
-//                     else resolve(result);
-//                 })
-//                 .end(buffer);
-//             });
-
-//             avatarUrl = (uploadResult as any).secure_url;
-//         }
-
-//         // Update user document
-//         const updatedUser = await Users.findByIdAndUpdate(
-//             id,
-//             {
-//                 ...(bio && { bio }),
-//                 ...(travelBudget && {
-//                 "travelBudget.total": travelBudget.total,
-//                 "travelBudget.spent": travelBudget.spent,
-//                 }),
-//                 ...(avatarUrl && { avatar: avatarUrl }),
-//             },
-//             { new: true }
-//         );
-
-//         if (!updatedUser) {
-//             return NextResponse.json({ error: "User not found" }, { status: 404 });
-//         }
-
-//         return NextResponse.json({ updatedUser }, { status: 200 });
-//     } catch (error) {
-//         console.error("Error updating user:", error);
-//         return NextResponse.json({ error: "Server issue" }, { status: 500 });
-//     }
-// }
-
-// import { NextRequest, NextResponse } from "next/server";
-// import { getServerSession } from "next-auth";
-// import { authOptions } from "@/app/api/auth/[...nextauth]/route"; 
-// import { connectDB } from "@/libs/db";
-// import { Users } from "@/model/user";
-
-
-
-import { getToken } from "next-auth/jwt";
-
-
 export async function PUT(req: NextRequest, { params }: { params: { id: string } }) {
-  try {
-    const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
+    try {
+        await connectDB();
+        const { id } = params;
 
-    console.log("JWT token:", token);
-    console.log("All cookies in request:", req.cookies.getAll());
+        const formData = await req.formData();
+        const bio = formData.get("bio") as string | null;
+        const joinedAt=formData.get("joinedAt") as string | null;
+        const travelBudget = formData.get("travelBudget")
+        ? JSON.parse(formData.get("travelBudget") as string)
+        : null;
 
+        let avatarUrl: string | undefined;
 
-    if (!token || !token._id) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+        const avatarFile = formData.get("avatar") as File | null;
+        if (avatarFile) {
+            const arrayBuffer = await avatarFile.arrayBuffer();
+            const buffer = Buffer.from(arrayBuffer);
+
+            const uploadResult = await new Promise((resolve, reject) => {
+                cloudinary.uploader
+                .upload_stream({ folder: "Users" }, (error, result) => {
+                    if (error) reject(error);
+                    else resolve(result);
+                })
+                .end(buffer);
+            });
+
+            avatarUrl = (uploadResult as any).secure_url;
+        }
+
+        // Update user document
+        const updatedUser = await Users.findByIdAndUpdate(
+            id,
+            {
+                ...(bio && { bio }),
+                ...(joinedAt && { joinedAt: new Date(joinedAt) }),
+                ...(travelBudget && {
+                "travelBudget.total": travelBudget.total,
+                "travelBudget.spent": travelBudget.spent,
+                }),
+                ...(avatarUrl && { avatar: avatarUrl }),
+            },
+            { new: true }
+        );
+
+        if (!updatedUser) {
+            return NextResponse.json({ error: "User not found" }, { status: 404 });
+        }
+
+        return NextResponse.json({ updatedUser }, { status: 200 });
+    } catch (error) {
+        console.error("Error updating user:", error);
+        return NextResponse.json({ error: "Server issue" }, { status: 500 });
     }
-
-    const { id } = params;
-
-    if (token._id !== id) {
-      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
-    }
-
-    await connectDB();
-    const body = await req.json();
-
-    const bio = body.bio ?? null;
-    const travelBudget = body.travelBudget ?? null;
-
-    const updatedUser = await Users.findByIdAndUpdate(
-      id,
-      {
-        ...(bio && { bio }),
-        ...(travelBudget && {
-          "travelBudget.total": travelBudget.total,
-          "travelBudget.spent": travelBudget.spent,
-        }),
-      },
-      { new: true }
-    );
-
-    if (!updatedUser) {
-      return NextResponse.json({ error: "User not found" }, { status: 404 });
-    }
-
-    return NextResponse.json({ updatedUser }, { status: 200 });
-  } catch (error) {
-    console.error("Error updating user:", error);
-    return NextResponse.json({ error: "Server issue" }, { status: 500 });
-  }
 }
+
+
+
+
+
+
 
 
 

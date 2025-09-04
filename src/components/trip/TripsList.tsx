@@ -21,7 +21,7 @@ function TripsList({ trips }: { trips: Trip[] }) {
     }
 
     return (
-        <div className="space-y-6">
+        <div className="space-y-6 ">
             {trips.map((trip) => {
                 // Format the dates nicely
                 const start = new Date(trip.startDate).toLocaleDateString();
@@ -30,7 +30,7 @@ function TripsList({ trips }: { trips: Trip[] }) {
                 return (
                     <div
                         key={trip._id}
-                        className="flex items-center justify-between rounded-2xl bg-white shadow p-4"
+                        className="flex items-center justify-between rounded-2xl text-black shadow p-4 bg-white"
                     >
                         <div className="flex flex-col space-y-2">
                             <h2 className="text-lg font-semibold">{trip.title}</h2>
