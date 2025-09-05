@@ -1,36 +1,33 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+### Here’s a ready-to-use GitHub README template for your Travel Website Project:
 
-## Getting Started
+## Travel Website
 
-First, run the development server:
+A modern, responsive Travel & Booking Website built with Next.js, React, and Tailwind CSS & shadcn. This project showcases destinations, events, work trips, and user profiles with wishlist functionality.
 
-```bash
+
+Features
+
+Explore Destinations – Browse curated places with photos & details
+Travel Events Page – Discover upcoming travel events and expos
+User Wishlist – Save favorite destinations and trips
+User Profile Management – Update details, track bookings, and preferences
+Search & Filters – Find trips/events easily
+
+
+Frontend: Next.js (React, TypeScript), Tailwind CSS, ShadCN/UI
+Backend: Next.js API Routes, MongoDB, Mongoose
+Authentication: NextAuth.js
+Database: MongoDB Atlas
+Other: Lucide Icons, Framer Motion for animations
+
+## Clone the Repository
+git clone https://github.com/your-username/travel-website.git
+cd travel-website
+## npm install
+## create .env.local
+MONGODB_URI=your-mongodb-uri
+NEXTAUTH_SECRET=your-secret
+NEXTAUTH_URL=http://localhost:3000
+## run
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
