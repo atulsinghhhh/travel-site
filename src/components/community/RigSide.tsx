@@ -20,6 +20,7 @@ type User = {
 function RigSide() {
     const [events, setEvents] = useState<Event[]>([]);
     const [users, setUsers] = useState<User[]>([]);
+    const [following, setFollowing] = useState<string[]>([]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -40,6 +41,17 @@ function RigSide() {
         };
         fetchData();
     }, []);
+
+    const handleFollow = async (userId: string) => {
+        try {
+            await fetch(`/api/users/${userId}/follow`, { method: "POST" });
+            console.log(`Followed user with ID: ${userId}`);
+            // Optionally update UI or state here
+        } catch (err) {
+            console.error("Error following user:", err);
+
+        }
+    }
 
     return (
         <div className="w-80 bg-gray-50 dark:bg-gray-900 p-4 border-l border-gray-200 dark:border-gray-800 h-full flex flex-col justify-between">
@@ -64,8 +76,17 @@ function RigSide() {
                             <span className="text-sm font-medium text-gray-900 dark:text-gray-100">
                                 {user.username}
                             </span>
-                            <Button size="sm" variant="outline" className="text-black">
-                                Follow
+                            <Button
+                                size="sm"
+                                variant={following.includes(user._id) ? "default" : "outline"}
+                                className={
+                                following.includes(user._id)
+                                    ? "bg-green-500 text-white hover:bg-green-600"
+                                    : "text-black"
+                                }
+                                onClick={() => handleFollow(user._id)}
+                            >
+                                {following.includes(user._id) ? "Following" : "Follow"}
                             </Button>
                         </div>
                         
