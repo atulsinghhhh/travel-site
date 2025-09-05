@@ -5,6 +5,7 @@ export interface IEvent{
     description:string
     date:Date,
     location:string,
+    time: string,
     createdBy: mongoose.Schema.Types.ObjectId
 }
 
@@ -13,6 +14,7 @@ const eventSchema=new Schema({
     description: {type:String,required:true},
     date: {type:Date},
     location: {type:String,required:true},
+    time: {type:String,required:true},
     createdBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Users"

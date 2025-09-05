@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 type Event = {
     _id: string;
@@ -77,30 +78,32 @@ function RigSide() {
                 </div>
 
                 {/* Upcoming Events */}
+                
                 <div>
                 <h2 className="text-lg font-semibold mb-3 text-gray-900 dark:text-white">
                     Upcoming Events
                 </h2>
-                <div className="space-y-3">
-                    {events.length > 0 ? (
-                    events.map((event) => (
-                        <div
-                        key={event._id}
-                        className="p-3 bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700"
-                        >
-                        <h3 className="text-sm font-medium text-gray-900 dark:text-gray-100">
+
+                {events.length > 0 ? (
+                    <div className="space-y-4 mb-4">
+                    {events.map((event) => (
+                        <Link key={event._id} href={`/community/event/${event._id}`}>
+                        <div className="p-3 bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 hover:shadow-md hover:bg-gray-50 dark:hover:bg-gray-700 transition">
+                            <h3 className="text-sm font-medium text-gray-900 dark:text-gray-100">
                             {event.title}
-                        </h3>
-                        <p className="text-xs text-gray-500">
+                            </h3>
+                            <p className="text-xs text-gray-500">
                             {new Date(event.date).toDateString()}
-                        </p>
+                            </p>
                         </div>
-                    ))
-                    ) : (
+                        </Link>
+                    ))}
+                    </div>
+                ) : (
                     <p className="text-sm text-gray-500">No upcoming events</p>
-                    )}
+                )}
                 </div>
-                </div>
+
             </div>
         </div>
 

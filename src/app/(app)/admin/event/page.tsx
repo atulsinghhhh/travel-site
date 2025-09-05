@@ -11,6 +11,7 @@ type Event = {
     title: string;
     description: string;
     date: string;
+    time: string;
     location: string;
 };
 
@@ -20,6 +21,7 @@ function Page() {
         description: "",
         date: "",
         location: "",
+        time: ""
     });
     const [events, setEvents] = useState<Event[]>([]);
     const [message, setMessage] = useState("");
@@ -77,6 +79,7 @@ function Page() {
             description: "",
             date: "",
             location: "",
+            time: ""
             });
             fetchEvents(); // refresh event list
         }
@@ -173,6 +176,21 @@ function Page() {
                 required
             />
             </div>
+            <div>
+            <Label htmlFor="time" className="block mb-1 font-medium">
+                Time
+            </Label>
+            <Input
+                type="time"
+                id="time"
+                name="time"
+                value={eventForm.time}
+                onChange={handleChange}
+                className="w-full"
+                required
+            />
+            </div>
+            
             <Button type="submit" disabled={loading}>
             {loading ? "Creating..." : "Create Event"}
             </Button>

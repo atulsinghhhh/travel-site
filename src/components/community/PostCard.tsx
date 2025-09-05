@@ -42,7 +42,7 @@ function PostCard({ filter }: { filter: string }) {
 
     return (
         <div className="mb-6">
-        <h2 className="text-xl font-semibold mb-4">Community Posts</h2>
+        <h2 className="text-xl font-semibold mb-4 text-black">Community Posts</h2>
         <div className="flex flex-col space-y-6">
             {posts.map((post) => (
             <Card

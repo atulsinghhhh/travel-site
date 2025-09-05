@@ -19,7 +19,7 @@ export async function POST(req:NextRequest){
             return NextResponse.json({ error: "Forbidden" }, { status: 403 });
         }
 
-        const {title,description,date,location} = await req.json();
+        const {title,description,date,location,time} = await req.json();
         if(!title || !description || !date || !location){
             return NextResponse.json({error: "all fields are required"},{status:400})
         }
@@ -28,7 +28,9 @@ export async function POST(req:NextRequest){
             title,
             description,
             date: new Date(date),
-            location
+            location,
+            time,
+            createdBy: session.user._id
         })
         return NextResponse.json({message: "successfully created event"},{status:201})
     } catch (error) {
