@@ -89,7 +89,6 @@ function Sidebar() {
             <div className="p-4 border-t border-gray-200">
                 <Button
                 variant="outline"
-                className="w-full bg-orange-500 text-white hover:bg-orange-600 border-none rounded-lg"
                 onClick={() => router.push("/community/create")}
                 >
                 + Create New Post

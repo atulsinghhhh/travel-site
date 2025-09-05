@@ -116,10 +116,10 @@ function FlightTab({ onSelectFlight }: FlightsTabProps) {
 
     return (
         <div className="max-w-6xl mx-auto p-6">
-        <h1 className="text-2xl font-bold mb-6">✈️ Book Your Flight</h1>
+        <h1 className="text-2xl font-bold mb-6 text-black">Book Your Flight</h1>
 
         {/* Airline & Price Filters */}
-        <div className="flex flex-col md:flex-row gap-4 mb-6">
+        <div className="flex flex-col md:flex-row gap-4 mb-6 text-black">
             <Input
             placeholder="Search by airline..."
             value={airlineFilter}
@@ -127,7 +127,7 @@ function FlightTab({ onSelectFlight }: FlightsTabProps) {
             className="flex-1"
             />
 
-            <div className="flex gap-2 flex-wrap">
+            <div className="flex gap-2 flex-wrap text-black">
             {priceRanges.map(range => (
                 <Button
                 key={range}
@@ -141,6 +141,7 @@ function FlightTab({ onSelectFlight }: FlightsTabProps) {
 
             <Button
             variant="outline"
+            className="text-black"
             onClick={() => {
                 setAirlineFilter("");
                 setPriceFilter("");

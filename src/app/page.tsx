@@ -3,15 +3,17 @@
 import React, { useEffect, useState } from "react";
 import { BackgroundBeamsWithCollision } from "@/components/ui/background-beams-with-collision";
 
+
 export default function HomePage() {
 
   
   
   return(
-        <BackgroundBeamsWithCollision>
-          hello world
-          {}
-      </BackgroundBeamsWithCollision>
+        // <BackgroundBeamsWithCollision>
+        <></>
+          // hello world
+          // {}
+      // </BackgroundBeamsWithCollision>
   )
 }
 

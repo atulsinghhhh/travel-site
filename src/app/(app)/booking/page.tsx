@@ -15,28 +15,28 @@ function Page() {
     });
 
     return (
-        <div className="p-8 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+        <div className="p-8 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8 items-start bg-gray-800 text-white">
             <div className="lg:col-span-2">
-                <h1 className="text-3xl font-extrabold mb-6 text-gray-900 tracking-tight">Find Your Perfect Getaway </h1>
+                <h1 className="text-3xl font-extrabold mb-6 text-white tracking-tight">Find Your Perfect Getaway </h1>
 
                 <Tabs defaultValue="flight" className="w-full space-y-8">
-                    <div className="bg-white shadow-lg rounded-2xl p-6 border border-gray-200">
+                    <div className="bg-gray-300 shadow-lg rounded-2xl p-6 border ">
                         <TabsList className="flex w-full justify-between rounded-xl bg-gray-100 shadow-sm p-1">
                         <TabsTrigger
                             value="flight"
-                            className="flex-1 text-center rounded-lg data-[state=active]:bg-blue-600 data-[state=active]:text-white transition-all"
+                            className="flex-1 text-center rounded-lg data-[state=active]:bg-gray-900 data-[state=active]:text-white transition-all"
                         >
                             Flights
                         </TabsTrigger>
                         <TabsTrigger
                             value="resort"
-                            className="flex-1 text-center rounded-lg data-[state=active]:bg-blue-600 data-[state=active]:text-white transition-all"
+                            className="flex-1 text-center rounded-lg data-[state=active]:bg-gray-900 data-[state=active]:text-white transition-all"
                         >
                             Resorts
                         </TabsTrigger>
                         <TabsTrigger
                             value="car"
-                            className="flex-1 text-center rounded-lg data-[state=active]:bg-blue-600 data-[state=active]:text-white transition-all"
+                            className="flex-1 text-center rounded-lg data-[state=active]:bg-gray-900 data-[state=active]:text-white transition-all"
                         >
                             Cars
                         </TabsTrigger>
@@ -65,7 +65,7 @@ function Page() {
                 </Tabs>
             </div>
 
-            <div className="lg:col-span-1">
+            <div className="mt-8">
                 <div className="sticky top-8">
                 <BookingSummary
                     booking={booking.resort || booking.flight || booking.car}

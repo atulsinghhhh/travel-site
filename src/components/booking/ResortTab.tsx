@@ -119,11 +119,11 @@ function ResortTab({ onSelectResort }: ResortsTabProps) {
 
     return (
         <div className="max-w-6xl mx-auto p-6">
-        <h1 className="text-2xl font-bold mb-6">🏝️ Book Your Resort</h1>
+        <h1 className="text-2xl font-bold mb-6 text-black">Book Your Resort</h1>
 
 
         {/* Check-in / Check-out */}
-        <div className="grid grid-cols-2 gap-4 mb-6">
+        <div className="grid grid-cols-2 gap-4 mb-6 text-black">
             <div>
                 <label className="text-sm font-medium">Check-In</label>
                 <Input type="date" value={checkIn} onChange={e => setCheckIn(e.target.value)} />
@@ -134,7 +134,7 @@ function ResortTab({ onSelectResort }: ResortsTabProps) {
             </div>
         </div>
 
-        <div className="flex flex-col md:flex-row gap-4 mb-6">
+        <div className="flex flex-col md:flex-row gap-4 mb-6 text-black">
             <Input
                 placeholder="Search location..."
                 value={locationFilter}

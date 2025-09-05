@@ -118,10 +118,10 @@ function CarTab({ onSelectCar }: CarTabProps) {
 
     return (
         <div className="max-w-6xl mx-auto p-6">
-        <h1 className="text-2xl font-bold mb-6">Book Your Car</h1>
+        <h1 className="text-2xl font-bold mb-6 text-black">Book Your Car</h1>
 
         {/* Brand & Price Filters */}
-        <div className="flex flex-col md:flex-row gap-4 mb-6">
+        <div className="flex flex-col md:flex-row gap-4 mb-6 text-gray-700">
             <Input
             placeholder="Search by brand..."
             value={brandFilter}
@@ -129,12 +129,12 @@ function CarTab({ onSelectCar }: CarTabProps) {
             className="flex-1"
             />
 
-            <div className="flex gap-2 flex-wrap">
+            <div className="flex gap-2 flex-wrap text-black">
             {priceRanges.map((range) => (
                 <Button
-                key={range}
-                variant={priceFilter === range ? "default" : "outline"}
-                onClick={() => setPriceFilter(priceFilter === range ? "" : range)}
+                    key={range}
+                    variant={priceFilter === range ? "default" : "outline"}
+                    onClick={() => setPriceFilter(priceFilter === range ? "" : range)}
                 >
                 {range}
                 </Button>
@@ -143,6 +143,7 @@ function CarTab({ onSelectCar }: CarTabProps) {
 
             <Button
             variant="outline"
+            className="text-black"
             onClick={() => {
                 setBrandFilter("");
                 setPriceFilter("");
