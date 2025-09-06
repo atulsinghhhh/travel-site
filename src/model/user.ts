@@ -11,6 +11,7 @@ export interface IUser {
     joinedAt: Date;
     tripsCount: number;
     role: string;
+    isEmailVerified: boolean;
     wishlist: mongoose.Schema.Types.ObjectId[];
     savedTrips: mongoose.Schema.Types.ObjectId[];
     reviews: mongoose.Schema.Types.ObjectId[];
@@ -36,6 +37,10 @@ const userSchema = new Schema<IUser>(
             type: String,
             enum: ["user", "admin"],
             default: "user"
+        },
+        isEmailVerified: {
+            type: Boolean,
+            default: false
         },
 
         wishlist: [
@@ -68,9 +73,9 @@ const userSchema = new Schema<IUser>(
     },
     { timestamps: true }
 );
-userSchema.pre("save",async function(next){
-    if(!this.isModified) return;
-    this.password=await bcrypt.hash(this.password,10);
+userSchema.pre("save", async function (next) {
+    if (!this.isModified) return;
+    this.password = await bcrypt.hash(this.password, 10);
     next();
 })
 
