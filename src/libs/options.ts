@@ -13,7 +13,7 @@ export const authOptions: NextAuthOptions = {
                 password: { label: "Password", type: "password" },
             },
 
-            async authorize(credentials: any): Promise<any> {
+            async authorize(credentials: Record<string, string> | undefined) {
                 if (!credentials?.identifier || !credentials?.password) {
                     throw new Error("Email/Username and password are required");
                 }
@@ -37,9 +37,10 @@ export const authOptions: NextAuthOptions = {
                     const isPasswordValid = await bcrypt.compare(credentials.password, user.password);
                     if (!isPasswordValid) {
                         throw new Error("Invalid password");
-                    } 
+                    }
 
                     return {
+                        id: user._id.toString(),
                         _id: user._id.toString(),
                         email: user.email,
                         username: user.username,
@@ -59,43 +60,43 @@ export const authOptions: NextAuthOptions = {
             }
 
         }),
-        
+
     ],
-    
+
     callbacks: {
         async jwt({ token, user }) {
-        if (user) {
-            token._id = user._id?.toString();
-            token.username = user.username;
-            token.fullname = user.fullname;
-            token.avatar = user.avatar;
-            token.bio = user.bio || "";
-            token.travelBudget = user.travelBudget || { total: 0, spent: 0 };
-            token.role = user.role || "user"
-            token.wishlist = user.wishlist;
-            token.savedTrips = user.savedTrips
-            token.joinedAt=user.joinedAt
-        }
+            if (user) {
+                token._id = user._id?.toString();
+                token.username = user.username;
+                token.fullname = user.fullname;
+                token.avatar = user.avatar;
+                token.bio = user.bio || "";
+                token.travelBudget = user.travelBudget || { total: 0, spent: 0 };
+                token.role = user.role || "user"
+                token.wishlist = user.wishlist;
+                token.savedTrips = user.savedTrips
+                token.joinedAt = user.joinedAt
+            }
             // console.log("token: ",token);
             return token;
         },
         async session({ session, token }) {
-        if (session.user) {
-            session.user._id = token._id;
-            session.user.username = token.username;
-            session.user.fullname = token.fullname;
-            session.user.avatar = token.avatar;
+            if (session.user) {
+                session.user._id = token._id;
+                session.user.username = token.username;
+                session.user.fullname = token.fullname;
+                session.user.avatar = token.avatar;
 
-            // overwrite default name with your fullname
-            session.user.name = token.fullname;
+                // overwrite default name with your fullname
+                session.user.name = token.fullname;
 
-            session.user.bio = token.bio;
-            session.user.travelBudget = token.travelBudget;
-            session.user.role = token.role;
-            session.user.wishlist = token.wishlist;
-            session.user.savedTrips = token.savedTrips
-            session.user.joinedAt=token.joinedAt
-        }
+                session.user.bio = token.bio;
+                session.user.travelBudget = token.travelBudget;
+                session.user.role = token.role;
+                session.user.wishlist = token.wishlist;
+                session.user.savedTrips = token.savedTrips
+                session.user.joinedAt = token.joinedAt
+            }
             // console.log("session: ",session.user)
             return session;
         },

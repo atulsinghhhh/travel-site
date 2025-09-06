@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-function Page() {
+function LoginPage() {
     const [identifier, setIdentifier] = useState(""); // 🔥 username or email
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
@@ -26,8 +26,8 @@ function Page() {
         });
 
         if (response?.error) {
-        setError("Invalid email/username or password");
-        return;
+            setError("Invalid email/username or password");
+            return;
         }
 
         const session = await getSession();
@@ -43,30 +43,30 @@ function Page() {
             </CardHeader>
             <CardContent>
                 <form onSubmit={handleSubmit} className="space-y-4">
-                <Input
-                    type="text"
-                    value={identifier}
-                    onChange={(e) => setIdentifier(e.target.value)}
-                    placeholder="Email or Username"
-                    required
-                />
-                <Input
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder="Password"
-                    required
-                />
-                <Button type="submit" className="w-full">
-                    Login
-                </Button>
-                {error && (
-                    <p className="text-red-500 text-sm text-center">{error}</p>
-                )}
+                    <Input
+                        type="text"
+                        value={identifier}
+                        onChange={(e) => setIdentifier(e.target.value)}
+                        placeholder="Email or Username"
+                        required
+                    />
+                    <Input
+                        type="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        placeholder="Password"
+                        required
+                    />
+                    <Button type="submit" className="w-full">
+                        Login
+                    </Button>
+                    {error && (
+                        <p className="text-red-500 text-sm text-center">{error}</p>
+                    )}
                 </form>
             </CardContent>
         </Card>
     );
 }
 
-export default Page;
+export default LoginPage;

@@ -2,12 +2,12 @@ import { getServerSession } from "next-auth";
 import { User } from "next-auth";
 import { authOptions } from "@/libs/options";
 import { Users } from "@/model/user";
-import { NextRequest,NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { connectDB } from "@/libs/db";
 
 export async function POST(
     req: NextRequest,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
     try {
         const session = await getServerSession(authOptions);
@@ -15,7 +15,7 @@ export async function POST(
             return NextResponse.json({ error: "Not authorized" }, { status: 401 });
         }
 
-        const userId = params.id;
+        const { id: userId } = await params;
         const { destinationId } = await req.json();
 
         if (!destinationId) {
@@ -54,19 +54,19 @@ export async function POST(
 
 export async function GET(
     req: NextRequest,
-    { params }: { params: { id: string } }){
-        try {
-            await connectDB();
+    { params }: { params: Promise<{ id: string }> }) {
+    try {
+        await connectDB();
 
-            const {id}=params;
-            const user=await Users.findById(id).populate("wishlist").select("wishlist");
+        const { id } = await params;
+        const user = await Users.findById(id).populate("wishlist").select("wishlist");
 
-            if(!user){
-                return NextResponse.json({error: "User not found"},{status:404})
-            }
-            return NextResponse.json({message: "Wishlist fetched successfully",wishlist: user.wishlist},{status:200})
-        } catch (error) {
-            console.log("Error: ",error);
-            return NextResponse.json({error: "Server issue"},{status:500})
+        if (!user) {
+            return NextResponse.json({ error: "User not found" }, { status: 404 })
         }
+        return NextResponse.json({ message: "Wishlist fetched successfully", wishlist: user.wishlist }, { status: 200 })
+    } catch (error) {
+        console.log("Error: ", error);
+        return NextResponse.json({ error: "Server issue" }, { status: 500 })
     }
+}

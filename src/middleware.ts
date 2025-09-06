@@ -25,6 +25,7 @@ export default withAuth(
                 pathname.startsWith("/api/community/event/admin") ||
                 pathname.startsWith("/api/booking/resort/admin") ||
                 pathname.startsWith("/api/booking/flight/admin") ||
+                pathname.startsWith("/api/destinations/admin") ||
                 pathname.startsWith("/api/booking/car/admin")
             ) {
                 return token?.role === "admin";

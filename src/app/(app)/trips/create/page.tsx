@@ -7,42 +7,42 @@ import { Label } from '@/components/ui/label';
 import { Loader2 } from 'lucide-react';
 import React, { useState } from 'react'
 
-function page() {
-    const [formState,setFormState]=useState({
+function CreateTripPage() {
+    const [formState, setFormState] = useState({
         title: "",
         startDate: "",
         endDate: "",
-        image: "",
+        image: null as File | null,
     });
-    const [error,setError]=useState("");
-    const [loading,setLoading]=useState(false);
-    
-    const handleSumbit = async(e:React.FormEvent)=>{
+    const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
+
+    const handleSumbit = async (e: React.FormEvent) => {
         e.preventDefault();
         setError("");
         setLoading(true);
         try {
-            const formData= new FormData();
-            formData.append("title",formState.title);
-            formData.append("startDate",formState.startDate);
-            formData.append("endDate",formState.endDate);
-            if(formState.image) {
-                formData.append("image",formState.image)
+            const formData = new FormData();
+            formData.append("title", formState.title);
+            formData.append("startDate", formState.startDate);
+            formData.append("endDate", formState.endDate);
+            if (formState.image) {
+                formData.append("image", formState.image)
             }
 
-            const response=await fetch("/api/trips",{
+            const response = await fetch("/api/trips", {
                 method: "POST",
                 body: formData
             })
 
-            const data=await response.json();
-            console.log("data: ",data);
-            if(!response.ok){
+            const data = await response.json();
+            console.log("data: ", data);
+            if (!response.ok) {
                 throw new Error(data.error || "Failed to create trip");
             }
-            
-        } catch (error:any) {
-            setError(error)
+
+        } catch (error: unknown) {
+            setError(error instanceof Error ? error.message : 'An error occurred')
         } finally {
             setLoading(false)
         }
@@ -50,7 +50,7 @@ function page() {
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value, files } = e.target;
         if (name === "image" && files) {
-            setFormState({ ...formState, image: files[0] as any });
+            setFormState({ ...formState, image: files[0] as File });
         } else {
             setFormState({ ...formState, [name]: value });
         }
@@ -119,16 +119,16 @@ function page() {
                             type="submit"
                             className="w-full"
                             disabled={loading}
-                            >
+                        >
                             {loading ? (
                                 <>
-                                <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Creating...
+                                    <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Creating...
                                 </>
                             ) : (
                                 "Create Trip"
                             )}
                         </Button>
-                        
+
                     </form>
                 </CardContent>
             </Card>
@@ -136,4 +136,4 @@ function page() {
     )
 }
 
-export default page
+export default CreateTripPage

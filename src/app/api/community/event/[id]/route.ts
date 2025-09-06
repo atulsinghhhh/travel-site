@@ -1,20 +1,20 @@
 import { getServerSession } from "next-auth";
 import { connectDB } from "@/libs/db";
-import { NextRequest,NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { Event } from "@/model/event";
 import { authOptions } from "@/libs/options";
 import { Users } from "@/model/user";
 
-export async function GET(req:NextRequest,{params}: {params:{id:string}}){
+export async function GET(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
     try {
-
+        const { id } = await params;
         await connectDB();
-        const event = await Event.findById(params.id).populate("createdBy", "username fullname");
+        const event = await Event.findById(id).populate("createdBy", "username fullname");
         if (!event) {
             return NextResponse.json({ error: "Event not found" }, { status: 404 });
         }
 
-        return NextResponse.json({event},{status:200});
+        return NextResponse.json({ event }, { status: 200 });
 
     } catch (error) {
         console.error("Error fetching event:", error);
@@ -22,21 +22,22 @@ export async function GET(req:NextRequest,{params}: {params:{id:string}}){
     }
 }
 
-export async function DELETE(req: NextRequest, { params }: { params: { id: string } }){
+export async function DELETE(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
     try {
-        const session=await getServerSession(authOptions)
-        if(!session || !session.user){
-            return NextResponse.json( {error: "Not authorized" }, { status: 401 })
+        const { id } = await params;
+        const session = await getServerSession(authOptions)
+        if (!session || !session.user) {
+            return NextResponse.json({ error: "Not authorized" }, { status: 401 })
         }
 
         await connectDB();
 
-        const admin=await Users.findById(session.user._id);
-        if(admin.role !== "admin"){
+        const admin = await Users.findById(session.user._id);
+        if (admin.role !== "admin") {
             return NextResponse.json({ error: "Forbidden" }, { status: 403 });
         }
 
-        const deleted = await Event.findByIdAndDelete(params.id);
+        const deleted = await Event.findByIdAndDelete(id);
         if (!deleted) {
             return NextResponse.json({ error: "Event not found" }, { status: 404 });
         }

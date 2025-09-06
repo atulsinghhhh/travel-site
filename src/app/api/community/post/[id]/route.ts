@@ -1,70 +1,71 @@
 import { connectDB } from "@/libs/db";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/libs/options";
-import { NextRequest,NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { Community } from "@/model/community";
 
 
-export async function GET(req:NextRequest,{params}: {params: {id:string}}){
+export async function GET(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
     try {
-        const session=await getServerSession(authOptions);
-        if(!session || !session.user){
-            return NextResponse.json( {error: "Not authorized" }, { status: 401 })
+        const session = await getServerSession(authOptions);
+        if (!session || !session.user) {
+            return NextResponse.json({ error: "Not authorized" }, { status: 401 })
         }
 
         await connectDB();
 
-        const user=session.user;
-        const {id}=params;
+        const user = session.user;
+        const { id } = await params;
 
-        const post=await Community.findById({
+        const post = await Community.findById({
             _id: id,
             userId: user._id
         });
-        if(!post){
-            return NextResponse.json({error: "failed to fetch the single post"},{status:401});
+        if (!post) {
+            return NextResponse.json({ error: "failed to fetch the single post" }, { status: 401 });
         }
-        return NextResponse.json({post},{status:200})
+        return NextResponse.json({ post }, { status: 200 })
     } catch (error) {
         console.error("Error fetching posts:", error);
         return NextResponse.json({ error: "Server error" }, { status: 500 });
     }
 }
 
-export async function DELETE(req:NextRequest,{params}:{params:{id:string}}){
+export async function DELETE(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
     try {
-        const session=await getServerSession(authOptions);
-        if(!session || !session.user){
-            return NextResponse.json( {error: "Not authorized" }, { status: 401 })
+        const session = await getServerSession(authOptions);
+        if (!session || !session.user) {
+            return NextResponse.json({ error: "Not authorized" }, { status: 401 })
         }
 
         await connectDB();
 
-        const {id}=params;
+        const { id } = await params;
 
-        const deletePost=await Community.findByIdAndDelete(id);
-        if(!deletePost){
-            return NextResponse.json({error: "failed to delete the single post"},{status:401});
+        const deletePost = await Community.findByIdAndDelete(id);
+        if (!deletePost) {
+            return NextResponse.json({ error: "failed to delete the single post" }, { status: 401 });
         }
-        return NextResponse.json({message: "Successully deleted"},{status:200})
+        return NextResponse.json({ message: "Successully deleted" }, { status: 200 })
     } catch (error) {
         console.error("Error fetching posts:", error);
         return NextResponse.json({ error: "Server error" }, { status: 500 });
     }
 }
 
-export async function PUT(req:NextRequest,{params}:{params:{id:string}}){
+export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
     try {
-        const session=await getServerSession(authOptions);
-        if(!session || !session.user){
-            return NextResponse.json( {error: "Not authorized" }, { status: 401 })
+        const session = await getServerSession(authOptions);
+        if (!session || !session.user) {
+            return NextResponse.json({ error: "Not authorized" }, { status: 401 })
         }
 
         await connectDB();
         const body = await req.json();
-        const {content,hashtags}=body
+        const { content, hashtags } = body
 
-        const post = await Community.findById(params.id);
+        const { id } = await params;
+        const post = await Community.findById(id);
         if (!post) {
             return NextResponse.json({ error: "Post not found" }, { status: 404 });
         }
@@ -78,8 +79,8 @@ export async function PUT(req:NextRequest,{params}:{params:{id:string}}){
 
         await post.save();
 
-        return NextResponse.json({ message: "Post updated successfully", post },{ status: 200 });
-        
+        return NextResponse.json({ message: "Post updated successfully", post }, { status: 200 });
+
     } catch (error) {
         console.error("Error fetching posts:", error);
         return NextResponse.json({ error: "Server error" }, { status: 500 });

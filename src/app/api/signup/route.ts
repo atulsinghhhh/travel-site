@@ -10,7 +10,7 @@ export async function POST(req:NextRequest){
         const { fullname, username, email, password, } = body;
 
         if(!fullname || !username || !email || !password){
-            return NextResponse.json({error: "all fields are required"},{status:401});
+            return NextResponse.json({error: "all fields are required"},{status:400});
         }
 
         const existingUser=await Users.findOne({
@@ -20,7 +20,7 @@ export async function POST(req:NextRequest){
         });
 
         if(existingUser){
-            return NextResponse.json({error: "Already present this user by email and username"},{status:401})
+            return NextResponse.json({error: "Already present this user by email and username"},{status:409})
         }
 
         const userDetails=await Users.create({

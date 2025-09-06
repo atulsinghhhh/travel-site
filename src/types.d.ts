@@ -1,11 +1,11 @@
-import mongoose,{Connection} from "mongoose";
+import { Connection } from "mongoose";
 
 declare global {
     var mongoose: {
-        Types: any;
+        Types: typeof import("mongoose").Types;
         conn: Connection | null;
         promise: Promise<Connection> | null;
     }
 }
 
-export {}
+export { }

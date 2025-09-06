@@ -4,7 +4,7 @@ import { authOptions } from "@/libs/options";
 import { connectDB } from "@/libs/db";
 import { Users } from "@/model/user";
 
-export async function POST(req: NextRequest, { params }: { params: { id: string } }) {
+export async function POST(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
     try {
         const session=await getServerSession(authOptions);
         if(!session || !session.user){
@@ -14,7 +14,7 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
         await connectDB();
 
         const currentUserId=session.user._id 
-        const targetUserId=params.id
+        const {id: targetUserId} = await params;
 
         if (currentUserId === targetUserId) {
             return NextResponse.json({ error: "You cannot follow yourself" }, { status: 400 });
@@ -41,11 +41,12 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
     }
 }
 
-export async function GET(req: NextRequest, { params }: { params: { id: string } }) {
+export async function GET(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
     try {
         await connectDB();
 
-        const user = await Users.findById(params.id).populate("following", "username fullname email");
+        const {id} = await params;
+        const user = await Users.findById(id).populate("following", "username fullname email");
         if (!user) {
             return NextResponse.json({ error: "User not found" }, { status: 404 });
         }

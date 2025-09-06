@@ -18,7 +18,7 @@ type Destination = {
     image: string;
 };
 
-const categories = ["Beaches", "Mountains", "City", "Adventure", "Relaxation","Momentum"];
+const categories = ["Beaches", "Mountains", "City", "Adventure", "Relaxation", "Momentum"];
 
 function Page() {
     const { data: session } = useSession();
@@ -48,10 +48,10 @@ function Page() {
     const filteredDestination = destinations.filter((d) => {
         const Category = filter ? d.category === filter : true;
         const Search = search
-        ? d.name.toLowerCase().includes(search.toLowerCase()) ||
+            ? d.name.toLowerCase().includes(search.toLowerCase()) ||
             d.country.toLowerCase().includes(search.toLowerCase
                 ())
-        : true;
+            : true;
 
         return Category && Search;
     });
@@ -74,7 +74,7 @@ function Page() {
             });
             const data = await response.json();
             if (response.ok) {
-                setWishlist(data.wishlist); 
+                setWishlist(data.wishlist);
             } else {
                 alert(data.error || "Something went wrong");
             }
@@ -100,55 +100,54 @@ function Page() {
             {/* filters */}
             <div className="flex gap-2 mb-6 flex-wrap cursor-pointer">
                 {categories.map((cat) => (
-                <Button
-                    key={cat}
-                    variant={filter === cat ? "default" : "outline"}
-                    onClick={() => setFilter(filter === cat ? "" : cat)}
-                >
-                    {cat}
-                </Button>
+                    <Button
+                        key={cat}
+                        variant={filter === cat ? "default" : "outline"}
+                        onClick={() => setFilter(filter === cat ? "" : cat)}
+                    >
+                        {cat}
+                    </Button>
                 ))}
             </div>
 
             {/* Destination Grid */}
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 cursor-pointer">
                 {filteredDestination.map((dest) => {
-                const isWishlisted = wishlist.includes(dest._id); 
+                    const isWishlisted = wishlist.includes(dest._id);
 
-                return (
-                    <Link href={`/destination/${dest._id}`} key={dest._id}>
-                        <BackgroundGradient className="rounded-xl">
-                            <Card key={dest._id} className="overflow-hidden shadow-lg rounded-xl">
-                                <img
-                                src={dest.image}
-                                alt={dest.name}
-                                className="h-40 w-full object-cover"
-                                />
-                                <CardContent>
-                                <h3 className="font-semibold">{dest.name}</h3>
-                                <p className="text-sm text-gray-500">{dest.country}</p>
-
-                                <Button
-                                    variant={isWishlisted ? "destructive" : "outline"}
-                                    size="sm"
-                                    className="mt-3"
-                                    disabled={loading === dest._id}
-                                    onClick={() => toggleWishlist(dest._id)}
-                                >
-                                    <Heart
-                                    className={`h-4 w-4 mr-1 ${
-                                        isWishlisted ? "fill-red-500" : ""
-                                    }`}
+                    return (
+                        <Link href={`/destination/${dest._id}`} key={dest._id}>
+                            <BackgroundGradient className="rounded-xl">
+                                <Card className="overflow-hidden shadow-lg rounded-xl">
+                                    <img
+                                        src={dest.image}
+                                        alt={dest.name}
+                                        className="h-40 w-full object-cover"
                                     />
-                                    {isWishlisted ? "Remove" : "Wishlist"}
-                                </Button>
+                                    <CardContent>
+                                        <h3 className="font-semibold">{dest.name}</h3>
+                                        <p className="text-sm text-gray-500">{dest.country}</p>
 
-                                </CardContent>
-                            </Card>
-                        </BackgroundGradient>
-                    </Link>
+                                        <Button
+                                            variant={isWishlisted ? "destructive" : "outline"}
+                                            size="sm"
+                                            className="mt-3"
+                                            disabled={loading === dest._id}
+                                            onClick={() => toggleWishlist(dest._id)}
+                                        >
+                                            <Heart
+                                                className={`h-4 w-4 mr-1 ${isWishlisted ? "fill-red-500" : ""
+                                                    }`}
+                                            />
+                                            {isWishlisted ? "Remove" : "Wishlist"}
+                                        </Button>
 
-                );
+                                    </CardContent>
+                                </Card>
+                            </BackgroundGradient>
+                        </Link>
+
+                    );
                 })}
             </div>
         </div>

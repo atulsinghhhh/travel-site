@@ -20,7 +20,7 @@ type Destination = {
 };
 
 
-function page() {
+function DestinationDetailPage() {
     const [destination, setDestination] = useState<Destination | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
@@ -93,4 +93,4 @@ function page() {
     )
 }
 
-export default page
+export default DestinationDetailPage
