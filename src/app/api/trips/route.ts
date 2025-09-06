@@ -51,46 +51,6 @@ export async function POST(req:NextRequest){
     }
 }   
 
-// export async function GET(req:NextRequest){
-//     try {
-//         const session=await getServerSession(authOptions)
-//         const user: User=session?.user as User;
-//         if(!session || !session.user){
-//             return NextResponse.json( {error: "Not authorized" }, { status: 401 })
-//         }
-
-//         await connectDB();
-
-//         const {searchParams} = new URL(req.url);
-//         const type = searchParams.get("type")?.toLowerCase().trim();
-//         const today=new Date();
-
-//         let query: any = {userId: user._id?.toString()};
-//         console.log("userId: ",user._id);
-
-//         if(type === "upcoming"){
-//             query.startDate = {$gte:today}
-//             query.isCanceled = false; 
-//         } 
-//         else if (type === "past"){
-//             query.endDate = { $lt: today };
-//             query.isCanceled = false;
-//         }
-//         else if(type === "canceled"){
-//             query.isCanceled = true;
-//         }
-
-//         const trips = await Trip.find(query).sort({ startDate: -1 });
-
-//         console.log("Query:", query);
-//         console.log("Trips:", trips);
-
-//         return NextResponse.json({trips},{status:200});
-//     } catch (error) {
-//         console.log("Error: ",error);
-//         return NextResponse.json({error: "Internal Server to fetch all trip"},{status:500});
-//     }
-// }
 
 export async function GET(req: NextRequest) {
     try {
