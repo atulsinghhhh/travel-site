@@ -1,9 +1,8 @@
-import { Trip } from "@/model/trip";
+import { Trips } from "@/model/trip";
 import { connectDB } from "@/libs/db";
 import { NextResponse, NextRequest } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/libs/options";
-import { cloudinary } from "@/libs/cloudinary";
 
 export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
     try {
@@ -12,51 +11,37 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
             return NextResponse.json({ error: "Not authorized" }, { status: 401 })
         }
         await connectDB();
-        const { id } = await params;
-        const formData = await req.formData();
-        const title = formData.get("title")?.toString();
-        const startDate = formData.get("startDate")?.toString();
-        const endDate = formData.get("endDate")?.toString();
-        const avatar = formData.get("image") as File | null;
-        if (!title || !startDate || !endDate) {
-            return NextResponse.json({ error: "all fields are required" }, { status: 400 });
-        }
 
-        let imageUrl: string | undefined = undefined;
-        if (avatar) {
-            // convert file to buffer;
-            const bytes = await avatar.arrayBuffer();
-            const buffer = Buffer.from(bytes);
-            // upload to cloudinary
-            const uploadResult = await new Promise<any>((resolve: (value: any) => void, reject: (reason?: any) => void) => {
-                cloudinary.uploader.upload_stream({ folder: "trips" }, (error: any, result: any) => {
-                    if (error) reject(error);
-                    else resolve(result);
-                }).end(buffer);
-            });
-            imageUrl = uploadResult.secure_url;
+        const { id } = await params;
+        const body = await req.json();
+        const { title, startDate, endDate, location, description ,destinations,activities,expenses } = body;
+        if(!title || !startDate || !endDate || !location){
+            return NextResponse.json({error:"Title, Start Date, End Date and Location are required"}, {status:400});
         }
-        const updatedTripData: any = {
-            title,
-            startDate: new Date(startDate),
-            endDate: new Date(endDate),
-        };
-        if (imageUrl) {
-            updatedTripData.image = imageUrl;
-        }
-        const updatedTrip = await Trip.findByIdAndUpdate(
+        const updatedTrip = await Trips.findOneAndUpdate(
             { _id: id, userId: session.user._id },
-            updatedTripData,
+            {
+                title,
+                startDate,
+                endDate,
+                location,
+                description,
+                destinations,
+                activities,
+                expenses
+            },
             { new: true }
         );
         if (!updatedTrip) {
             return NextResponse.json({ error: "Trip not found" }, { status: 404 });
         }
-        return NextResponse.json({ message: "Successfully updated trip", trip: updatedTrip }, { status: 200 });
-    } catch (error) {
-        console.log("Error: ", error);
-        return NextResponse.json({ error: "failed to update trip" }, { status: 500 });
+
+        return NextResponse.json({ message: "Trip updated", trip: updatedTrip }, { status: 200 });
+    }catch (error) {
+        console.error("Error updating trip:", error);
+        return NextResponse.json({ error: "Internal server error" }, { status: 500 });
     }
+
 }
 
 export async function DELETE(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
@@ -69,7 +54,7 @@ export async function DELETE(req: NextRequest, { params }: { params: Promise<{ i
         await connectDB();
         const { id } = await params;
 
-        const canceledTrip = await Trip.findByIdAndUpdate(
+        const canceledTrip = await Trips.findByIdAndUpdate(
             { _id: id, userId: session.user._id },
             { isCanceled: true },
             { new: true }
@@ -99,7 +84,7 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
         const { id } = await params;
         console.log("id: ", id);
 
-        const trip = await Trip.findById(
+        const trip = await Trips.findById(
             {
                 _id: id,
                 userId: user._id
