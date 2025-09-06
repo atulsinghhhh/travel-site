@@ -6,38 +6,6 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/libs/options";
 import { User } from "next-auth";
 
-export async function GET(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
-    try {
-        await connectDB();
-
-        const session = await getServerSession(authOptions);
-        console.log("Session: ", session?.user);
-
-        const user: User = session?.user as User
-        console.log("User: ", user);
-
-        if (!session || !session.user) {
-            return NextResponse.json({ error: "Not authorized" }, { status: 401 })
-        }
-
-        const { id } = await params;
-        const userId = await Users.findById(id)
-            .populate("community", "fullName username avatar")
-            .populate("savedTrips")
-            .populate("wishlist")
-            .populate("reviews");
-
-        if (!userId) {
-            return NextResponse.json({ error: "User not found" }, { status: 404 })
-        }
-
-        return NextResponse.json({ message: "user fetch successfully", userId }, { status: 200 })
-    } catch (error) {
-        console.log("Error: ", error);
-        return NextResponse.json({ error: "Server issue" }, { status: 500 })
-    }
-}
-
 
 export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
     try {

@@ -7,9 +7,9 @@ export default function FollowingPage() {
 
     useEffect(() => {
         const fetchFollowing = async () => {
-        const res = await fetch("/api/users/following"); // adjust API
-        const data = await res.json();
-        setFollowing(data || []);
+            const res = await fetch("/api/users/following"); 
+            const data = await res.json();
+            setFollowing(data || []);
         };
         fetchFollowing();
     }, []);

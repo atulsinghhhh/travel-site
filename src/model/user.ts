@@ -13,8 +13,7 @@ export interface IUser {
     role: string;
     isEmailVerified: boolean;
     wishlist: mongoose.Schema.Types.ObjectId[];
-    savedTrips: mongoose.Schema.Types.ObjectId[];
-    reviews: mongoose.Schema.Types.ObjectId[];
+    community: mongoose.Schema.Types.ObjectId[];
     travelBudget: {
         total: number;
         spent: number;
@@ -49,20 +48,8 @@ const userSchema = new Schema<IUser>(
                 ref: "Destination",
             },
         ],
+        community: [{ type: Schema.Types.ObjectId, ref: "Community" }],
 
-        savedTrips: [
-            {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: "Trip",
-            },
-        ],
-
-        reviews: [
-            {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: "Review",
-            },
-        ],
 
         travelBudget: {
             total: { type: Number, default: 0 },
