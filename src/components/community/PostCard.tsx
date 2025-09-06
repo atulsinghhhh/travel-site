@@ -6,6 +6,7 @@ import { useSession } from "next-auth/react";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { CardBody, CardContainer, CardItem } from "@/components/ui/3d-card";
 import { Card } from "../ui/card";
+import Link from "next/link";
 type Post = {
     _id: string;
     image: string;
@@ -23,15 +24,18 @@ function PostCard({ filter }: { filter: string }) {
     const [posts, setPosts] = useState<Post[]>([]);
     const { data: session } = useSession();
 
+
     useEffect(() => {
         const fetchPost = async () => {
         try {
             const response = await fetch(`/api/community/post?filter=${filter}`);
             const data = await response.json();
+            console.log("fullname", data.posts[0]?.createdBy?.fullname);
+            console.log("posts data:", data.posts.createdBy);
             if (response.ok) {
-            setPosts(data.posts || []);
+                setPosts(data.posts || []);
             } else {
-            throw new Error("Failed to fetch posts");
+                throw new Error("Failed to fetch posts");
             }
         } catch (error) {
             console.error("Error fetching posts:", error);
@@ -45,6 +49,7 @@ function PostCard({ filter }: { filter: string }) {
         <h2 className="text-xl font-semibold mb-4 text-black">Community Posts</h2>
         <div className="flex flex-col space-y-6">
             {posts.map((post) => (
+                <Link href={`community/post/${post._id}`} key={post._id}>
             <Card
                 key={post._id}
                 className="overflow-hidden shadow-card hover:shadow-warm transition-shadow"
@@ -61,10 +66,10 @@ function PostCard({ filter }: { filter: string }) {
                     </Avatar>
                     <div>
                         <p className="text-sm font-semibold text-gray-800 dark:text-gray-200">
-                        @{post.createdBy?.username || session?.user?.username || "user"}
+                        @{post.createdBy?.username}
                         </p>
                         <p className="text-xs text-gray-500">
-                        {session?.user?.fullname || post.createdBy?.fullname}
+                        {post.createdBy?.fullname}
                         </p>
                     </div>
                     </div>
@@ -92,6 +97,7 @@ function PostCard({ filter }: { filter: string }) {
                 )}
                 </div>
             </Card>
+            </Link>
             ))}
         </div>
         </div>

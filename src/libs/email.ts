@@ -1,17 +1,16 @@
 import nodemailer from 'nodemailer';
 
-// Create a transporter for sending emails
 const createTransporter = () => {
     return nodemailer.createTransport({
-        service: 'gmail', // You can change this to your preferred email service
+        service: 'gmail', 
         auth: {
-            user: process.env.EMAIL_USER, // Your email
-            pass: process.env.EMAIL_PASS, // Your email password or app password
+            user: process.env.EMAIL_USER, 
+            pass: process.env.EMAIL_PASS, 
         },
     });
 };
 
-// Generate a 6-digit OTP
+
 export const generateOTP = (): string => {
     return Math.floor(100000 + Math.random() * 900000).toString();
 };
@@ -54,7 +53,7 @@ export const sendOTPEmail = async (email: string, otp: string): Promise<boolean>
           </div>
           
           <div style="text-align: center; margin-top: 30px; color: #999; font-size: 12px;">
-            <p>© 2024 Roamio. All rights reserved.</p>
+            <p>© 2025 Roamio. All rights reserved.</p>
             <p>This is an automated message, please do not reply to this email.</p>
           </div>
         </div>
@@ -105,7 +104,7 @@ export const sendWelcomeEmail = async (email: string, fullname: string): Promise
             
             <div style="text-align: center; margin: 30px 0;">
               <a href="${process.env.NEXTAUTH_URL || 'http://localhost:3000'}" 
-                 style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+                style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
                         color: white; 
                         padding: 12px 30px; 
                         text-decoration: none; 

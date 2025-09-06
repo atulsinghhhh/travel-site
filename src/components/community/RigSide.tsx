@@ -106,7 +106,7 @@ function RigSide() {
                 </h2>
 
                 {events.length > 0 ? (
-                    <div className="space-y-4 mb-4">
+                    <div className="space-y-6">
                     {events.map((event) => (
                         <Link key={event._id} href={`/community/event/${event._id}`}>
                         <div className="p-3 bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 hover:shadow-md hover:bg-gray-50 dark:hover:bg-gray-700 transition">

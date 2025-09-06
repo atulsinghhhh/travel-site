@@ -22,7 +22,7 @@ export async function GET(req:NextRequest){
             _id: { $nin: [session.user._id, ...currentUser.following] },
         })
             .select("username fullname image bio")
-            .limit(10);
+            .limit(3);
         
         return NextResponse.json({suggestedUsers},{status:200})
     } catch (error) {

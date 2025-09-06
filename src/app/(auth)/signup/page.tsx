@@ -78,7 +78,6 @@ export default function SignupPage() {
         setErrorMsg(data.error || "Something went wrong");
       } else {
         setSuccessMsg("Signup successful! Redirecting...");
-        setTimeout(() => router.push("/login"), 1500);
       }
       router.push("/");
     } catch (error) {

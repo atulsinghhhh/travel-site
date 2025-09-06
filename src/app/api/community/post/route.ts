@@ -46,14 +46,14 @@ export async function POST(req: NextRequest){
 
         const newPost=await Community.create({
             userId: session.user._id,
+            createdBy: session.user._id,
             content,
             name,
             hashtags: hashtags ? hashtags.split(",").map((tag) => tag.trim()) : [],
             image: avatarUrl ? avatarUrl.secure_url : null,
-            createdBy: session.user._id
         })
 
-        // console.log("NewPost: ",newPost);
+        console.log("createdBy: ",newPost.createdBy);
 
         return NextResponse.json({message: "Succesfully created",newPost},{status:200});
     } catch (error) {
@@ -79,13 +79,13 @@ export async function GET(req:NextRequest){
         if(filter === "recent"){
             posts=await Community.find(query)
                 .sort({createdAt:-1})
-                .populate("userId", "username image")
+                .populate("createdBy", "username image fullname")
                 .lean()
         }
         else if(filter === "popular"){
             posts=await Community.find(query)
                 .sort({"hashtags.length": -1,createdAt:-1})
-                .populate("userId", "username image")
+                .populate("createdBy", "username image fullname")
                 .lean()
         }
         else if(filter === "following"){
@@ -99,7 +99,7 @@ export async function GET(req:NextRequest){
                 userId: {$in: user.following}
             })
             .sort({"hashtags.length": -1,createdAt:-1})
-            .populate("userId", "username image")
+            .populate("createdBy", "username image fullname")
             .lean()
         }
 

@@ -20,9 +20,9 @@ function Page() {
                 
             <div className="p-4 border-b border-gray-800  sticky top-0 z-10 backdrop-blur">
                 <TabsList className="grid w-full grid-cols-3 rounded-xl">
-                <TabsTrigger value="recent">Recent</TabsTrigger>
-                <TabsTrigger value="following">Following</TabsTrigger>
-                <TabsTrigger value="popular">Popular</TabsTrigger>
+                    <TabsTrigger value="recent">Recent</TabsTrigger>
+                    <TabsTrigger value="following">Following</TabsTrigger>
+                    <TabsTrigger value="popular">Popular</TabsTrigger>
                 </TabsList>
             </div>
 
