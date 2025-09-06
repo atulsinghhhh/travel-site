@@ -66,7 +66,7 @@ export async function POST(req: NextRequest) {
             category,
             description,
             image: secure_url,
-            createdBy: admin._id
+            createdBy: session.user._id
         })
 
         console.log("new Destination", newDestination);

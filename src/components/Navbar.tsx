@@ -18,7 +18,7 @@ export default function Navbar() {
             </Link>
 
                 {/* Center Links */}
-            <div className="flex space-x-8 text-lg font-medium">
+            <div className="flex space-x-8 text-md font-medium">
                 <Link href="/" >
                     Home
                 </Link>

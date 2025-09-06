@@ -6,6 +6,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Heart } from 'lucide-react';
 import { useSession } from 'next-auth/react';
+import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 
 type Destination = {
@@ -115,35 +116,37 @@ function Page() {
                 const isWishlisted = wishlist.includes(dest._id); 
 
                 return (
-                    <BackgroundGradient className="rounded-xl">
-                        <Card key={dest._id} className="overflow-hidden shadow-lg rounded-xl">
-                            <img
-                            src={dest.image}
-                            alt={dest.name}
-                            className="h-40 w-full object-cover"
-                            />
-                            <CardContent>
-                            <h3 className="font-semibold">{dest.name}</h3>
-                            <p className="text-sm text-gray-500">{dest.country}</p>
-
-                            <Button
-                                variant={isWishlisted ? "destructive" : "outline"}
-                                size="sm"
-                                className="mt-3"
-                                disabled={loading === dest._id}
-                                onClick={() => toggleWishlist(dest._id)}
-                            >
-                                <Heart
-                                className={`h-4 w-4 mr-1 ${
-                                    isWishlisted ? "fill-red-500" : ""
-                                }`}
+                    <Link href={`/destination/${dest._id}`} key={dest._id}>
+                        <BackgroundGradient className="rounded-xl">
+                            <Card key={dest._id} className="overflow-hidden shadow-lg rounded-xl">
+                                <img
+                                src={dest.image}
+                                alt={dest.name}
+                                className="h-40 w-full object-cover"
                                 />
-                                {isWishlisted ? "Remove" : "Wishlist"}
-                            </Button>
+                                <CardContent>
+                                <h3 className="font-semibold">{dest.name}</h3>
+                                <p className="text-sm text-gray-500">{dest.country}</p>
 
-                            </CardContent>
-                        </Card>
-                    </BackgroundGradient>
+                                <Button
+                                    variant={isWishlisted ? "destructive" : "outline"}
+                                    size="sm"
+                                    className="mt-3"
+                                    disabled={loading === dest._id}
+                                    onClick={() => toggleWishlist(dest._id)}
+                                >
+                                    <Heart
+                                    className={`h-4 w-4 mr-1 ${
+                                        isWishlisted ? "fill-red-500" : ""
+                                    }`}
+                                    />
+                                    {isWishlisted ? "Remove" : "Wishlist"}
+                                </Button>
+
+                                </CardContent>
+                            </Card>
+                        </BackgroundGradient>
+                    </Link>
 
                 );
                 })}
